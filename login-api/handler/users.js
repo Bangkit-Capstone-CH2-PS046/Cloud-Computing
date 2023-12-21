@@ -120,7 +120,14 @@ const login = async(req, res) => {
             maxAge: 24 * 60 * 60 * 1000,
             secure: true
         });
-        res.json({ accessToken })
+        res.json({
+            "Error" : false,
+            "Message" : "Success",
+            "LoginResult" : {
+                "Username" : userName,
+                "Token" : accessToken
+            }
+        })
 
     } catch (error) {
         res.json({
