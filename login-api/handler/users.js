@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const getUser = async (req, res) => {
     try {
-        const users = await Users.findAll({
+        const users = await Users.find({
             attributes: ['id', 'username', 'email']
         });
         res.json(users);
@@ -115,7 +115,17 @@ const login = async(req, res) => {
             }
         });
 
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie('refreshToken', refreshToken, 'email',userEmail, 'username', userName,{
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: true
+        });
+        res.cookie('email',userEmail, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: true
+        });
+        res.cookie('username', userName,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
             secure: true
@@ -125,6 +135,7 @@ const login = async(req, res) => {
             "Message" : "Success",
             "LoginResult" : {
                 "Username" : userName,
+                "Email" : userEmail,
                 "Token" : accessToken
             }
         })
