@@ -16,7 +16,7 @@ const startServer = async () => {
     }
 
     app.use(cookieParser())
-    app.use(express.json());
+    app.use(express.urlencoded({extended: true}));
     app.use(router);
     
     app.listen(5500, () => console.log('Listening on port 5500'));
